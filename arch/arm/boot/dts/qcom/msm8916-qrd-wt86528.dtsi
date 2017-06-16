@@ -12,37 +12,13 @@
 
 #include "msm8916-qrd.dtsi"
 #include "dsi-panel-innolux-720p-video.dtsi"
-#include "msm8916-camera-sensor-qrd-skul.dtsi"
+#include "msm8916-camera-sensor-qrd-wt86528.dtsi"
 #include "dsi-panel-hx8394d-720p-video.dtsi"                                               
 #include "dsi-panel-ili9881-720p-video.dtsi"
 #include "dsi-panel-ili9881-qimei-720p-video.dtsi"
 #include "msm-pm8916.dtsi"
 
 &tlmm_pinmux {
-	/*
-	ltr553_int_pin {
-		qcom,pins = <&gp 113>;
-		qcom,pin-func = <0>;
-		qcom,num-grp-pins = <1>;
-		label = "ltr553-irq";
-		ltr553_default: ltr553_default {
-		drive-strength = <6>;
-		bias-disable;
-		};
-	};
-	*/
-	/*
-	stk3x1x_int_pin {
-		qcom,pins = <&gp 113>;
-		qcom,pin-func = <0>;
-		qcom,num-grp-pins = <1>;
-		label = "stk3x1x-irq";
-		stk3x1x_default: stk3x1x_default {
-		drive-strength = <6>;
-		bias-disable;
-		};
-	};
-	*/
 	epl2182_int_pin {
 		qcom,pins = <&gp 113>;
 		qcom,pin-func = <0>;
@@ -99,45 +75,7 @@
 	};
 };
 
-&i2c_0 { /* BLSP1 QUP2 */
-	/*
-	liteon@23 {
-		compatible = "liteon,ltr553";
-		status = "disabled";
-		reg = <0x23>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&ltr553_default>;
-		interrupt-parent = <&msm_gpio>;
-		interrupts = <113 0x2>;
-		vdd-supply = <&pm8916_l17>;
-		vi2c-supply = <&pm8916_l6>;
-		liteon,intr = <&msm_gpio 113 0x2>;
-		liteon,highthr = <800>;
-		liteon,lowthr = <300>;
-	};
-	*/
-	/*
-	stk@48 {
-		compatible = "stk,stk3x1x";
-		status = "disabled";
-		reg = <0x48>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&stk3x1x_default>;
-		interrupt-parent = <&msm_gpio>;
-		interrupts = <113 0x2>;
-		vdd-supply = <&pm8916_l17>;
-		vio-supply = <&pm8916_l6>;
-		stk,irq-gpio = <&msm_gpio 113 0x02>;
-		stk,state-reg = <0x00>;
-		stk,psctrl-reg = <0x31>;
-		stk,alsctrl-reg = <0x39>;
-		stk,ledctrl-reg = <0xFF>;
-		stk,wait-reg = <0x07>;
-		stk,ps-thd-h = <1700>;
-		stk,ps-thd-l = <1500>;
-		stk,transmittance = <500>;
-	};
-	*/
+&i2c_0 {
 	elan@49 { 
 		compatible = "elan,epl2182";
 		reg = <0x49>;
@@ -480,10 +418,8 @@
 / {
 	qrd_batterydata: qcom,battery-data {
 		qcom,rpull-up-kohm = <68>;
-		qcom,vref-batt-therm = <1800000>;
-
-		//#include "batterydata-qrd-skuh-4v35-2000mah.dtsi"  //NewFeature,mahao.wt,DEL,2015.3.16,add for Fan54015 driver    
-		#include "batterydata-wingtech-guangyu-4v35-2300mah.dtsi"  //NewFeature,mahao.wt,ADD,2015.3.16,add for Fan54015 driver
+		qcom,vref-batt-therm = <1800000>;   
+		#include "batterydata-wingtech-guangyu-4v35-2300mah.dtsi"
 	};
 };
 
@@ -496,13 +432,6 @@
 	/delete-property/ bias-pull-up;
 	bias-disable;
 };
-
-/*&sdhc_2 {
-	qcom,vdd-always-on;
-	qcom,vdd-lpm-sup;
-
-	qcom,vdd-current-level = <4000 400000>;
-};*/
 
 &sdhc_2 {
 	vdd-supply = <&pm8916_l11>;

@@ -18,34 +18,22 @@
 / {
 	model = "Qualcomm Technologies, Inc. MSM 8916 QRD SKUL";
 	compatible = "qcom,msm8916-qrd-skul2", "qcom,msm8916-qrd", "qcom,msm8916", "qcom,qrd";
-	qcom,board-id = <0x1010b 9>;          
-                                                                
-
+	qcom,board-id = <0x1010b 9>;
 };
 
-&soc {
-        
-
-//{==== add by maxwill for fan54015 charging control begin ====
-                                                                                                 
-	i2c@78b8000 {                                                                                         
-		fan54015_otg_supply: fan54015-chg@6A {                                                             
-			compatible = "freescale,fan54015-chg";                                                               
-			reg = <0x6A>;            
-			
-
-                       pinctrl-names = "otg_pin_high","otg_pin_low";
-		       pinctrl-0 = <&otg_pin_high>;
-		       pinctrl-1 = <&otg_pin_low>;        
-
-		        regulator-name = "fan54015_otg_vreg";                                                              
-		       qcom,bms-controlled-charging;        
+&soc {                                         
+	i2c@78b8000 {
+		fan54015_otg_supply: fan54015-chg@6A {
+			compatible = "freescale,fan54015-chg";
+			reg = <0x6A>;
+			pinctrl-names = "otg_pin_high","otg_pin_low";
+			pinctrl-0 = <&otg_pin_high>;
+			pinctrl-1 = <&otg_pin_low>;
+			regulator-name = "fan54015_otg_vreg";
+			qcom,bms-controlled-charging;        
 		};                                                                                                  
 	};                                                                                                    
 
-//==== add by maxwill for fan54015 charging control end ====}
-
-  
 	sound {
 		qcom,msm-hs-micbias-type = "internel";
 		qcom,msm-micbias1-ext-cap;
@@ -63,6 +51,7 @@
 
 	};
 };
+
 &pm8916_chg {
 	qcom,vddmax-mv = <4350>;
 	qcom,vddsafe-mv = <4380>;
@@ -78,8 +67,7 @@
 		qcom,rpull-up-kohm = <68>;
 		qcom,vref-batt-therm = <1800000>;
 
-		//#include "batterydata-wingtech-guangyu-4v35-2300mah.dtsi"   //NewFeature,mahao.wt,DEL,2015.3.16,add for Fan54015 driver    
-		#include "batterydata-qrd-skuh-4v35-2000mah.dtsi"   //NewFeature,mahao.wt,ADD,2015.3.16,add for Fan54015 driver
+		#include "batterydata-wingtech-guangyu-4v35-2300mah.dtsi"
 	};
 };
 
@@ -88,11 +76,11 @@
 	qcom,battery-data = <&qrd_batterydata>;
 };
 
-&usb_otg {                                                                                             
-	qcom,hsusb-otg-mode = <3>;                                                                            
-	qcom,usbid-gpio = <&msm_gpio 110 0>;                                                                  
-	pinctrl-names = "default";                                                                            
-	pinctrl-0 = <&usbid_default>;                                                                         
-	vbus_otg-supply = <&fan54015_otg_supply>;                                                              
+&usb_otg {
+	qcom,hsusb-otg-mode = <3>;
+	qcom,usbid-gpio = <&msm_gpio 110 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&usbid_default>;
+	vbus_otg-supply = <&fan54015_otg_supply>;
 };                                                                                                         
                                                                                            
