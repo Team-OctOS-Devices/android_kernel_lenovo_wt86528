@@ -52,10 +52,8 @@
 
 #include <linux/msm-bus.h>
 
-#ifndef WT_USE_FAN54015
 #ifdef CONFIG_FORCE_FAST_CHARGE
 #include <linux/fastchg.h>
-#endif
 #endif
 
 #define MSM_USB_BASE	(motg->regs)
